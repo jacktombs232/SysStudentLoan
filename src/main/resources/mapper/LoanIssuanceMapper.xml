@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.sysstudentloan.dao.LoanIssuanceMapper">
+  <resultMap id="BaseResultMap" type="com.example.sysstudentloan.entity.LoanIssuance">
+    <id column="loan_issuance_id" jdbcType="INTEGER" property="id" />
+    <result column="loan_issuance_total_amount" jdbcType="INTEGER" property="totalAmount" />
+    <result column="loan_issuance_state" jdbcType="INTEGER" property="state" />
+    <result column="loan_issuance_issue_date" jdbcType="DATE" property="issueDate" />
+    <result column="loan_issuance_closing_date" jdbcType="DATE" property="closingDate" />
+    <result column="loan_issuance_repayment" jdbcType="INTEGER" property="repayment" />
+    <result column="loan_issuance_student_id" jdbcType="BIGINT" property="studentId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    loan_issuance.id as loan_issuance_id, loan_issuance.total_amount as loan_issuance_total_amount, 
+    loan_issuance.`state` as `loan_issuance_state`, loan_issuance.issue_date as loan_issuance_issue_date, 
+    loan_issuance.closing_date as loan_issuance_closing_date, loan_issuance.repayment as loan_issuance_repayment, 
+    loan_issuance.student_id as loan_issuance_student_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from loan_issuance loan_issuance
+    where loan_issuance.id = #{id,jdbcType=INTEGER}
+  </select>
+    <select id="selectByKey" resultMap="BaseResultMap" >
+      select
+      <include refid="Base_Column_List" />
+      from loan_issuance loan_issuance
+      <where>
+        <if test="id != null">
+          and  id = #{id}
+        </if>
+        <if test="totalAmount != null">
+        and  total_amount = #{totalAmount}
+        </if>
+        <if test="state != null">
+          and  `state` = #{state}
+        </if>
+        <if test="issueDate != null">
+          and  issue_date = #{issueDate}
+        </if>
+        <if test="closingDate != null">
+          and  closing_date = #{closingDate}
+        </if>
+        <if test="repayment != null">
+          and    repayment = #{repayment}
+        </if>
+        <if test="studentId != null">
+          and  student_id = #{studentId}
+        </if>
+      </where>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from loan_issuance
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.sysstudentloan.entity.LoanIssuance" useGeneratedKeys="true">
+    insert into loan_issuance (total_amount, `state`, issue_date, 
+      closing_date, repayment, student_id
+      )
+    values (#{totalAmount,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{issueDate,jdbcType=DATE}, 
+      #{closingDate,jdbcType=DATE}, #{repayment,jdbcType=INTEGER}, #{studentId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.sysstudentloan.entity.LoanIssuance" useGeneratedKeys="true">
+    insert into loan_issuance
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="totalAmount != null">
+        total_amount,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="issueDate != null">
+        issue_date,
+      </if>
+      <if test="closingDate != null">
+        closing_date,
+      </if>
+      <if test="repayment != null">
+        repayment,
+      </if>
+      <if test="studentId != null">
+        student_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="totalAmount != null">
+        #{totalAmount,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="issueDate != null">
+        #{issueDate,jdbcType=DATE},
+      </if>
+      <if test="closingDate != null">
+        #{closingDate,jdbcType=DATE},
+      </if>
+      <if test="repayment != null">
+        #{repayment,jdbcType=INTEGER},
+      </if>
+      <if test="studentId != null">
+        #{studentId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="java.util.Map">
+    update loan_issuance
+    <set>
+      <if test="totalAmount != null">
+        total_amount = #{totalAmount,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="issueDate != null">
+        issue_date = #{issueDate,jdbcType=DATE},
+      </if>
+      <if test="closingDate != null">
+        closing_date = #{closingDate,jdbcType=DATE},
+      </if>
+      <if test="repayment != null">
+        repayment = #{repayment,jdbcType=INTEGER},
+      </if>
+      <if test="studentId != null">
+        student_id = #{studentId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <where>
+      <if test="id !=null and id != 0">
+      and  id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="studentIdx !=null">
+      and  student_id = #{studentIdx,jdbcType=BIGINT}
+      </if>
+      <if test="repaymentx !=null">
+        and  repayment = #{repaymentx,jdbcType=INTEGER}
+      </if>
+    </where>
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.sysstudentloan.entity.LoanIssuance">
+    update loan_issuance
+    set total_amount = #{totalAmount,jdbcType=INTEGER},
+      `state` = #{state,jdbcType=INTEGER},
+      issue_date = #{issueDate,jdbcType=DATE},
+      closing_date = #{closingDate,jdbcType=DATE},
+      repayment = #{repayment,jdbcType=INTEGER},
+      student_id = #{studentId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getAllMoney" resultType="java.lang.Integer">
+    select SUM(loan_issuance.total_amount)
+    from loan_issuance loan_issuance
+    where student_id = #{studentId}
+    and repayment = #{repayment}
+  </select>
+</mapper>

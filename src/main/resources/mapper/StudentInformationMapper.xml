@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.sysstudentloan.dao.StudentInformationMapper">
+  <resultMap id="BaseResultMap" type="com.example.sysstudentloan.entity.StudentInformation">
+    <id column="student_information_account_id" jdbcType="BIGINT" property="accountId" />
+    <result column="student_information_bank_card" jdbcType="BIGINT" property="bankCard" />
+    <result column="student_information_gender" jdbcType="VARCHAR" property="gender" />
+    <result column="student_information_age" jdbcType="INTEGER" property="age" />
+    <result column="student_information_address" jdbcType="VARCHAR" property="address" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    student_information.account_id as student_information_account_id, student_information.bank_card as student_information_bank_card, 
+    student_information.gender as student_information_gender, student_information.age as student_information_age, 
+    student_information.address as student_information_address
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from student_information student_information
+    where student_information.account_id = #{accountId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from student_information
+    where account_id = #{accountId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="account_id" keyProperty="accountId" parameterType="com.example.sysstudentloan.entity.StudentInformation" useGeneratedKeys="true">
+    insert into student_information (bank_card, gender, age, 
+      address)
+    values (#{bankCard,jdbcType=BIGINT}, #{gender,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 
+      #{address,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="account_id" keyProperty="accountId" parameterType="com.example.sysstudentloan.entity.StudentInformation" useGeneratedKeys="true">
+    insert into student_information
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bankCard != null">
+        bank_card,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bankCard != null">
+        #{bankCard,jdbcType=BIGINT},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.sysstudentloan.entity.StudentInformation">
+    update student_information
+    <set>
+      <if test="bankCard != null">
+        bank_card = #{bankCard,jdbcType=BIGINT},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where account_id = #{accountId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.sysstudentloan.entity.StudentInformation">
+    update student_information
+    set bank_card = #{bankCard,jdbcType=BIGINT},
+      gender = #{gender,jdbcType=TINYINT},
+      age = #{age,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR}
+    where account_id = #{accountId,jdbcType=BIGINT}
+  </update>
+</mapper>

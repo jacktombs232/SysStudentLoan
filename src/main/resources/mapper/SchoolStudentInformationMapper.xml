@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.sysstudentloan.dao.SchoolStudentInformationMapper">
+  <resultMap id="BaseResultMap" type="com.example.sysstudentloan.entity.SchoolStudentInformation">
+    <id column="school_student_information_student_id" jdbcType="INTEGER" property="studentId" />
+    <result column="school_student_information_school_code" jdbcType="INTEGER" property="schoolCode" />
+    <result column="school_student_information_school_code2" jdbcType="INTEGER" property="schoolCode2" />
+    <result column="school_student_information_education" jdbcType="VARCHAR" property="education" />
+    <result column="school_student_information_professional_category" jdbcType="INTEGER" property="professionalCategory" />
+    <result column="school_student_information_admission_time" jdbcType="DATE" property="admissionTime" />
+    <result column="school_student_information_graduation_time" jdbcType="DATE" property="graduationTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    school_student_information.student_id as school_student_information_student_id, school_student_information.school_code as school_student_information_school_code, 
+    school_student_information.school_code2 as school_student_information_school_code2, 
+    school_student_information.education as school_student_information_education, school_student_information.professional_category as school_student_information_professional_category, 
+    school_student_information.admission_time as school_student_information_admission_time, 
+    school_student_information.graduation_time as school_student_information_graduation_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from school_student_information school_student_information
+    where school_student_information.student_id = #{studentId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from school_student_information
+    where student_id = #{studentId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="student_id" keyProperty="studentId" parameterType="com.example.sysstudentloan.entity.SchoolStudentInformation" useGeneratedKeys="true">
+    insert into school_student_information (school_code, school_code2, education, 
+      professional_category, admission_time, graduation_time
+      )
+    values (#{schoolCode,jdbcType=INTEGER}, #{schoolCode2,jdbcType=INTEGER}, #{education,jdbcType=VARCHAR}, 
+      #{professionalCategory,jdbcType=INTEGER}, #{admissionTime,jdbcType=DATE}, #{graduationTime,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="student_id" keyProperty="studentId" parameterType="com.example.sysstudentloan.entity.SchoolStudentInformation" useGeneratedKeys="true">
+    insert into school_student_information
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="schoolCode != null">
+        school_code,
+      </if>
+      <if test="schoolCode2 != null">
+        school_code2,
+      </if>
+      <if test="education != null">
+        education,
+      </if>
+      <if test="professionalCategory != null">
+        professional_category,
+      </if>
+      <if test="admissionTime != null">
+        admission_time,
+      </if>
+      <if test="graduationTime != null">
+        graduation_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="schoolCode != null">
+        #{schoolCode,jdbcType=INTEGER},
+      </if>
+      <if test="schoolCode2 != null">
+        #{schoolCode2,jdbcType=INTEGER},
+      </if>
+      <if test="education != null">
+        #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="professionalCategory != null">
+        #{professionalCategory,jdbcType=INTEGER},
+      </if>
+      <if test="admissionTime != null">
+        #{admissionTime,jdbcType=DATE},
+      </if>
+      <if test="graduationTime != null">
+        #{graduationTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.sysstudentloan.entity.SchoolStudentInformation">
+    update school_student_information
+    <set>
+      <if test="schoolCode != null">
+        school_code = #{schoolCode,jdbcType=INTEGER},
+      </if>
+      <if test="schoolCode2 != null">
+        school_code2 = #{schoolCode2,jdbcType=INTEGER},
+      </if>
+      <if test="education != null">
+        education = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="professionalCategory != null">
+        professional_category = #{professionalCategory,jdbcType=INTEGER},
+      </if>
+      <if test="admissionTime != null">
+        admission_time = #{admissionTime,jdbcType=DATE},
+      </if>
+      <if test="graduationTime != null">
+        graduation_time = #{graduationTime,jdbcType=DATE},
+      </if>
+    </set>
+    where student_id = #{studentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.sysstudentloan.entity.SchoolStudentInformation">
+    update school_student_information
+    set school_code = #{schoolCode,jdbcType=INTEGER},
+      school_code2 = #{schoolCode2,jdbcType=INTEGER},
+      education = #{education,jdbcType=VARCHAR},
+      professional_category = #{professionalCategory,jdbcType=INTEGER},
+      admission_time = #{admissionTime,jdbcType=DATE},
+      graduation_time = #{graduationTime,jdbcType=DATE}
+    where student_id = #{studentId,jdbcType=INTEGER}
+  </update>
+</mapper>

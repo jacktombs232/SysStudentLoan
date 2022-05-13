@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.sysstudentloan.dao.LoginMapper">
+
+    <resultMap id="authorityMap" type="com.example.sysstudentloan.entity.ParentAuthority">
+        <result column="menuid" property="menuid"></result>
+        <result column="icon" property="icon"></result>
+        <result column="menuname" property="menuname"></result>
+        <result column="hasThird" property="hasThird"></result>
+        <result column="url" property="url"></result>
+        <collection property="menus" ofType="com.example.sysstudentloan.entity.Authority">
+            <result column="childmenuid" property="menuid"></result>
+            <result column="childmenuicon" property="icon"></result>
+            <result column="childmenumenuname" property="menuname"></result>
+            <result column="childmenuhasThird" property="hasThird"></result>
+            <result column="childmenuurl" property="url"></result>
+        </collection>
+
+    </resultMap>
+
+    <select id="VerificationStduent" resultType="java.util.Map">
+        select id,name,password,role
+        from account
+        where (id = #{username}
+            or email = #{username})
+            and password = #{password}
+    </select>
+    <select id="selectAuthorityInfo" resultMap="authorityMap">
+        select  au.menuid,
+                au.icon,
+                au.menuname,
+                au.hasThird,
+                au.url,
+                r.menuid childmenuid,
+                a.icon childmenuicon,
+                a.menuname childmenumenuname,
+                a.hasThird childmenuhasThird,
+                a.url childmenuurl
+        from authority r
+                 left join role a
+                           on r.menuid = a.menuid
+                 left join role au
+                           on a.parentid  = au.menuid
+        where r.authority_id =#{authorityId}
+        order by a.menuid
+    </select>
+</mapper>

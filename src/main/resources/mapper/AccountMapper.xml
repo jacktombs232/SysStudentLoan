@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.sysstudentloan.dao.AccountMapper">
+  <resultMap id="BaseResultMap" type="com.example.sysstudentloan.entity.Account">
+    <id column="account_id" jdbcType="BIGINT" property="id" />
+    <result column="account_name" jdbcType="VARCHAR" property="name" />
+    <result column="account_password" jdbcType="VARCHAR" property="password" />
+    <result column="account_email" jdbcType="VARCHAR" property="email" />
+    <result column="account_enable" jdbcType="INTEGER" property="enable" />
+    <result column="account_phone" jdbcType="VARCHAR" property="phone" />
+    <result column="account_role" jdbcType="VARCHAR" property="role" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    account.id as account_id, account.`name` as `account_name`, account.`password` as `account_password`,
+    account.email as account_email, account.`enable` as `account_enable`, account.phone as account_phone,
+    account.`role` as `account_role`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from account
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+    <select id="selectByKey" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from account
+      <where>
+        <if test="id != 0">
+          and account.id like concat('%',#{id},'%')
+        </if>
+        <if test="name != null and name != ''">
+          and  account.name = #{name}
+        </if>
+        <if test="password != null and password != ''">
+          and    account.password = #{password}
+        </if>
+        <if test="email != null and email != ''">
+          and  account.email = #{email}
+        </if>
+        <if test="enable != 0">
+          and  account.enable = #{enable}
+        </if>
+        <if test="phone != null and phone != ''">
+          and  account.phone = #{phone}
+        </if>
+        <if test="role != null and role != ''">
+          and  account.role = #{role}
+        </if>
+      </where>
+    </select>
+    <select id="queryByEmail" resultType="com.example.sysstudentloan.entity.Account">
+      select
+      <include refid="Base_Column_List" />
+      from account
+        where email = #{email}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from account
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.sysstudentloan.entity.Account" useGeneratedKeys="true">
+    insert into account (id,`name`, `password`, email,
+      `enable`, phone, `role`
+      )
+    values (#{id},#{name}, #{password}, #{email},
+      #{enable}, #{phone}, #{role}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.sysstudentloan.entity.Account" useGeneratedKeys="true">
+    insert into account
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="password != null">
+        `password`,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="enable != null">
+        `enable`,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="role != null">
+        `role`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{id},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="enable != null">
+        #{enable,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null">
+        #{role,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.sysstudentloan.entity.Account">
+    update account
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        `password` = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="enable != null">
+        `enable` = #{enable,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null">
+        `role` = #{role,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.sysstudentloan.entity.Account">
+    update account
+    set `name` = #{name,jdbcType=VARCHAR},
+      `password` = #{password,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      `enable` = #{enable,jdbcType=INTEGER},
+      phone = #{phone,jdbcType=VARCHAR},
+      `role` = #{role,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

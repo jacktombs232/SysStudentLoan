@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.sysstudentloan.dao.MoneyPlanMapper">
+  <resultMap id="BaseResultMap" type="com.example.sysstudentloan.entity.MoneyPlan">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="studentId" jdbcType="BIGINT" property="studentid" />
+    <result column="time" jdbcType="DATE" property="time" />
+    <result column="rate" jdbcType="DOUBLE" property="rate" />
+    <result column="total" jdbcType="BIGINT" property="total" />
+    <result column="column_6" jdbcType="INTEGER" property="column6" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, studentId, `time`, rate, total, column_6, `status`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from money_plan
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByKey" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from money_plan
+    <where>
+      <if test="studentId != null and studentId !=0">
+        studentId = #{studentId}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from money_plan
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.sysstudentloan.entity.MoneyPlan" useGeneratedKeys="true">
+    insert into money_plan (studentId, `time`, rate, 
+      total, column_6, `status`
+      )
+    values (#{studentid,jdbcType=BIGINT}, #{time,jdbcType=DATE}, #{rate,jdbcType=DOUBLE}, 
+      #{total,jdbcType=BIGINT}, #{column6,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.sysstudentloan.entity.MoneyPlan" useGeneratedKeys="true">
+    insert into money_plan
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="studentId != null">
+        studentId,
+      </if>
+      <if test="time != null">
+        `time`,
+      </if>
+      <if test="rate != null">
+        rate,
+      </if>
+      <if test="total != null">
+        total,
+      </if>
+      <if test="column6 != null">
+        column_6,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="studentId != null">
+        #{studentId,jdbcType=BIGINT},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=DATE},
+      </if>
+      <if test="rate != null">
+        #{rate,jdbcType=DOUBLE},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=BIGINT},
+      </if>
+      <if test="column6 != null">
+        #{column6,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.sysstudentloan.entity.MoneyPlan">
+    update money_plan
+    <set>
+      <if test="studentid != null">
+        studentId = #{studentid,jdbcType=BIGINT},
+      </if>
+      <if test="time != null">
+        `time` = #{time,jdbcType=DATE},
+      </if>
+      <if test="rate != null">
+        rate = #{rate,jdbcType=DOUBLE},
+      </if>
+      <if test="total != null">
+        total = #{total,jdbcType=BIGINT},
+      </if>
+      <if test="column6 != null">
+        column_6 = #{column6,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    <where>
+      <if test="id != null">
+        and id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="column6x !=null">
+        and column_6 = #{column6x,jdbcType=INTEGER}
+      </if>
+    </where>
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.sysstudentloan.entity.MoneyPlan">
+    update money_plan
+    set studentId = #{studentid,jdbcType=BIGINT},
+      `time` = #{time,jdbcType=DATE},
+      rate = #{rate,jdbcType=DOUBLE},
+      total = #{total,jdbcType=BIGINT},
+      column_6 = #{column6,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,67 @@
+spring:
+  profiles: dev
+  datasource:
+    druid:
+
+    type: com.alibaba.druid.pool.DruidDataSource
+    clickhouse-db:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/student_loan?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=CONVERT_TO_NULL
+      username: root
+      password: 123456
+        #   Druid数据源配置
+      initialSize: 5
+      minIdle: 5
+      maxActive: 20
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      #   配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,wall,slf4j
+      maxPoolPreparedStatementPerConnectionSize: 20
+      useGlobalDataSourceStat: true
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+    monitor:
+      username: root
+      password: jackrise
+  # 邮箱功能
+  mail:
+    host: smtp.163.com
+    username: ZYX17711671157@163.com
+    # 授权码
+    password: FFVMZNCBIHVKOOHB
+    properties:
+      mail:
+        smtp:
+          auth: true
+          enable: true
+          required: true
+    default-encoding: UTF-8
+
+
+server:
+  servlet:
+    context-path: /sysloan
+  port: 9595
+logging:
+  file:
+    path: e:\syslog
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: com.example.sysstudentloan.entity
+
+alipay:
+  appId: 2021000118610883
+  privateKey: MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCkDrfYD4V9AhVbKbaViMqeRfFRddEGKnonByKKByOXJ4bl15ct8oj2Qsf0IoHLRVqiOox3MNXjMwt+ikhxaxjcV/rYm/9fbULolPfQSnqfCQBD5ExAxomsGOHgM0XozdbshxR/c4x39fvHZOpEpDRxkkdOwNRGcaCmED0Ga3pMsTRAUK0w75E1IHk6gkDUan8mF94NYw6eOAm2yjnr5IdwRXvDkAvruQuv9VSzR8GrLs12nP1hUTfOd/NZqvfdMR2KDEQs5+fFXk9cE17NykPvSiRhLzt1wXEXKsef7sP5+3lEvfA7ZxKdkivGCcp2gjoc9AwbYkHY0n5SLJwiAddFAgMBAAECggEBAKFE0pXylA8RiDrII3KVOFAjgxfHkATWpqNM0TgL0oGY2nN/3V3OZ7JkbThg32QZNgH5OfFEsUyY9fibKKFNXO/lEHHzzzJYLoiBP6WiQS2qZHdYqViXkef5wbhpzpQOG/MAyjaLOI8H4EveuKdnHyJxX+VbipAAzKHRnpt79YoCqOgIHSFADOv5Hk5AjHqmGatIFpFYUpob6edM7pI4WJVQup6M1OJXGfpQ8zZ/F7aAaVZExTgVkyJoJF5tYP8p3FuOarM1DJ2jEnqFaE5cV/cbk8+OJmdpTiNrMMyT5pnr2rD2RKmKO3LbVyNPotr9mqBfF466FsHGGZ1ssQ0i/qECgYEAzWWTcWv1JhbdgYRbXzis7PykA0LAg94uT5OB1V5OxD4HoRVJVITaCmRakGo4VbDXL+bcjbDpIjGtsEVr3S/CLlW9EFvSxFVM6aoL/k9iQa+t/9+WXnILHnaXTgb/VgVUWwSoEBRTkquvOeOqFbcOKkK7atL3qgoUA+oiqIw3uekCgYEAzHndB9nkKS2NaBFEKSywLJmDTBS+2+p8xEcng70EDuvOT8wuR7otM/Rv3TsRR9mtegSKFOLFQXh9KReyW1T8ilZbdNYkYuhTjTIrmy3H04DtlKcJro0lH83kKSyDWN8qPbcRNTwtWFKIVvg02kT1B/LiIkyDw8L6d9VTyyYovP0CgYEAi6Tsuqdoc+4FyUHAkZvJzhHyPJlMpBsRp16lXfiRWtDFhRog0grE513VSOw+wtvJYbL27oqB5pKaAQchz67huXjnYtDbGkrYUOEg6FT2e6xCg31zEWE9+Acu1YjiXoyfDoa68LuxGj4JkzUa9UqQoeDe5UDryzqw4vxzdd5nIMkCgYABlCdKujnyv3FKDmgSUVAC6CSFX9uhYwwXj90UPU9ctiFfqFnrH9rdfdOnR594iIu4V3SheKbBPKbqvE4aOmvAva3zFvws71JF0s9XYWEblvE+ppOCj4Br4HEUiE1zUDXJSDKP0Kkg93IqCbyOut2RdCSe0yxpRIYeir0c4myKGQKBgArTuod3OHg497A2GihI829R3A0utiHeMw0ovKOUqqoTdd/YGMwUlx8C+nVobNKIYuWZErbC5GqpdVHubFYEujfKK0+1a3rk6Jrc1F2zaNSexD+H+pvBsy9urk12HDtIuw99qpu7fGaReNZ00/ilCdi51KPhU/Y0ApWPC2dM/3Cl
+  publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApA632A+FfQIVWym2lYjKnkXxUXXRBip6JwciigcjlyeG5deXLfKI9kLH9CKBy0VaojqMdzDV4zMLfopIcWsY3Ff62Jv/X21C6JT30Ep6nwkAQ+RMQMaJrBjh4DNF6M3W7IcUf3OMd/X7x2TqRKQ0cZJHTsDURnGgphA9Bmt6TLE0QFCtMO+RNSB5OoJA1Gp/JhfeDWMOnjgJtso56+SHcEV7w5AL67kLr/VUs0fBqy7Ndpz9YVE3znfzWar33TEdigxELOfnxV5PXBNezcpD70okYS87dcFxFyrHn+7D+ft5RL3wO2cSnZIrxgnKdoI6HPQMG2JB2NJ+UiycIgHXRQIDAQAB
+  notifyUrl:  http://mktm2b.natappfree.cc/sysloan/order/notify_url
+  returnUrl: http://localhost:9999
+  signType: RSA2
+  charset: utf-8
+  gatewayUrl: https://openapi.alipaydev.com/gateway.do
+  logPath: "D:\\"

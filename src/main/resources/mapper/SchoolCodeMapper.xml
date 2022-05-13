@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.sysstudentloan.dao.SchoolCodeMapper">
+  <resultMap id="BaseResultMap" type="com.example.sysstudentloan.entity.SchoolCode">
+    <id column="school_code_number" jdbcType="INTEGER" property="number" />
+    <result column="school_code_parent_number" jdbcType="INTEGER" property="parentNumber" />
+    <result column="school_code_name" jdbcType="VARCHAR" property="name" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    school_code.`number` as `school_code_number`, school_code.parent_number as school_code_parent_number, 
+    school_code.`name` as `school_code_name`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from school_code school_code
+    where school_code.`number` = #{number,jdbcType=INTEGER}
+  </select>
+    <select id="selectTopKey" resultType="java.util.Map">
+      select sc.number as school_code,sc.name as name
+      from school_code as sc
+      where parent_number IS NULL
+            <if test="data != 0">
+              number = #{data}
+            </if>
+    </select>
+  <select id="selectSecondKey" resultType="java.util.Map">
+    select sc.number as school_code,sc.name as name
+    from school_code as sc
+    where parent_number = #{data}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from school_code
+    where `number` = #{number,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="number" keyProperty="number" parameterType="com.example.sysstudentloan.entity.SchoolCode" useGeneratedKeys="true">
+    insert into school_code (parent_number, `name`)
+    values (#{parentNumber,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="number" keyProperty="number" parameterType="com.example.sysstudentloan.entity.SchoolCode" useGeneratedKeys="true">
+    insert into school_code
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="parentNumber != null">
+        parent_number,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="parentNumber != null">
+        #{parentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.sysstudentloan.entity.SchoolCode">
+    update school_code
+    <set>
+      <if test="parentNumber != null">
+        parent_number = #{parentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where `number` = #{number,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.sysstudentloan.entity.SchoolCode">
+    update school_code
+    set parent_number = #{parentNumber,jdbcType=INTEGER},
+      `name` = #{name,jdbcType=VARCHAR}
+    where `number` = #{number,jdbcType=INTEGER}
+  </update>
+</mapper>
